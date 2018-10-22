@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace WindSeeker.Web.NationalWeatherService
 {
@@ -10,6 +11,8 @@ namespace WindSeeker.Web.NationalWeatherService
             Observations = observations;
 
             ObservationCount = observations.Length;
+            StartDate = observations.Min(x => x.Timestamp);
+            EndDate = observations.Max(x => x.Timestamp);
 
             // todo probably faster to just iterate once over observations
             var hasTemperature = observations.Where(x => x.Temperature.HasValue).Select(x => x.Temperature).Cast<double>();
@@ -35,6 +38,8 @@ namespace WindSeeker.Web.NationalWeatherService
         public Observation[] Observations { get; }
 
         public int ObservationCount { get; }
+        public DateTime StartDate { get; }
+        public DateTime EndDate { get; }
 
         public int TemperatureObservationCount { get; }
         public double MinTemperature { get; }

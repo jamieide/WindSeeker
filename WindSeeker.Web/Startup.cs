@@ -22,6 +22,7 @@ namespace WindSeeker.Web
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddRouting(options => options.LowercaseUrls = true);
+            services.AddAntiforgery();
 
             services.AddHttpClient<INationalWeatherServiceClient, NationalWeatherServiceClient>(client =>
             {

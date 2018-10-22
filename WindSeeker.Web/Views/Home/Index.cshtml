@@ -1,0 +1,23 @@
+﻿@model WindSeeker.Web.Models.FindStationsViewModel
+
+@{
+    ViewData["Title"] = "Find NWS Stations";
+}
+
+<h1>Find National Weather Service Stations</h1>
+<div asp-validation-summary="All"></div>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Latitude"></label>
+        <input type="text" asp-for="Latitude" class="form-control"/>
+        <span asp-validation-for="Latitude"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Longitude"></label>
+        <input type="text" asp-for="Longitude" class="form-control"/>
+        <span asp-validation-for="Longitude"></span>
+    </div>
+    <input type="submit" value="Submit"/>   
+</form>
+

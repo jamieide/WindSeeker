@@ -1,0 +1,21 @@
+﻿@model WindSeeker.Web.Models.ListViewModel
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+@if (Model.Stations.Length == 0)
+{
+    <h2>No NWS stations where found.</h2>
+}
+else
+{
+    <ul>
+        @foreach (var station in Model.Stations)
+        {
+            <li><a asp-controller="Home" asp-action="Details" asp-route-stationIdentifier="@station.Identifier">@station.ToString()</a></li>
+        }
+    </ul>
+}
+

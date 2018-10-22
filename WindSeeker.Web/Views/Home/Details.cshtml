@@ -1,0 +1,9 @@
+﻿@model WindSeeker.Web.Models.DetailsViewModel
+
+@{
+    ViewData["Title"] = $"{@Model.StationObservations.Station.Identifier} Details";
+}
+
+<h1>Details</h1>
+
+<h2>@Model.StationObservations.ObservationCount</h2>
