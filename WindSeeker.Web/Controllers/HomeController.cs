@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using WindSeeker.Web.Models;
 using WindSeeker.Web.NationalWeatherService;
 
@@ -24,39 +25,24 @@ namespace WindSeeker.Web.Controllers
             return await Task.FromResult(View());
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Index(FindStationsViewModel vm)
-        //{
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return await Task.FromResult(View());
-        //        }
-
-        //        return RedirectToAction(nameof(List), new {vm.Latitude, vm.Longitude});
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, ex.Message);
-        //        throw;
-        //    }
-        //}
-
         [HttpGet]
-        public async Task<IActionResult> List(double latitude, double longitude)
+        public async Task<IActionResult> List(FindStationsViewModel vm)
         {
             try
             {
-                // todo prevent this endpoint from being called directly and skipping lat/lon validation
-                var stations = await _nwsClient.GetStations(latitude, longitude);
-                var vm = new ListViewModel()
+                if (!ModelState.IsValid)
                 {
-                    Latitude = latitude,
-                    Longitude = longitude,
+                    return View(nameof(Index), vm);
+                }
+
+                var stations = await _nwsClient.GetStations(vm.Latitude, vm.Longitude);
+                var vmList = new ListViewModel()
+                {
+                    Latitude = vm.Latitude,
+                    Longitude = vm.Longitude,
                     Stations = stations
                 };
-                return View("List", vm);
+                return View("List", vmList);
             }
             catch (Exception ex)
             {

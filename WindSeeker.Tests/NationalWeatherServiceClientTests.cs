@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging.Abstractions;
 using WindSeeker.Web.NationalWeatherService;
 
 namespace WindSeeker.Tests
@@ -45,6 +45,15 @@ namespace WindSeeker.Tests
             var stations = await _nwsClient.GetStations(latitude, longitude);
             Assert.IsNotNull(stations);
             Assert.IsTrue(stations.Any());
+        }
+
+        [TestMethod]
+        [DataRow(48.8567, 2.3508)]
+        public async Task GetStationsReturnsEmptyIfNoneFound(double latitude, double longitude)
+        {
+            var stations = await _nwsClient.GetStations(latitude, longitude);
+            Assert.IsNotNull(stations);
+            Assert.IsFalse(stations.Any());
         }
 
         [TestMethod]

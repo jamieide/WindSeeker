@@ -1,10 +1,10 @@
 ﻿@model WindSeeker.Web.NationalWeatherService.StationObservations
 
 @{
-    ViewData["Title"] = $"{@Model.Station.Identifier} Observations";
+    ViewData["Title"] = $"{@Model.Station?.Identifier} Observations";
 }
 
-<h1>@Model.Station.Identifier Observations</h1>
+<h1>@Model.Station?.Identifier Observations</h1>
 
 <partial name="_Station" for="Station" />
 

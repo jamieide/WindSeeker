@@ -2,6 +2,9 @@
 
 namespace WindSeeker.Web.NationalWeatherService
 {
+    /// <summary>
+    /// A weather conditions observation.
+    /// </summary>
     public class Observation
     {
         public DateTime Timestamp { get; set; }

@@ -2,12 +2,12 @@
 
 <div>
     <div class="mb-3">
-        <h2>@Model.Identifier @Model.Name</h2>
+        <h2>@Model?.Identifier @Model?.Name</h2>
     </div>
     <dl class="row">
-        <dt class="col-2">Latitude/Longitude</dt>
-        <dd class="col-10">@Model.Latitude/@Model.Longitude</dd>
+        <dt class="col-2">Coordinates</dt>
+        <dd class="col-10">@Model?.Latitude,@Model?.Longitude</dd>
         <dt class="col-2">Time zone</dt>
-        <dd class="col-10">@Model.TimeZone</dd>
+        <dd class="col-10">@Model?.TimeZone</dd>
     </dl>
 </div>

@@ -4,14 +4,14 @@
     ViewData["Title"] = "List";
 }
 
-<h1>List</h1>
+<h1>National Weather Stations List</h1>
 @if (Model.Stations.Length == 0)
 {
-    <h2>No NWS stations where found.</h2>
+    <h2>No NWS stations were found for coordinates @Model.Latitude,@Model.Longitude.</h2>
 }
 else
 {
-    <h2>Stations near @Model.Latitude, @Model.Longitude</h2>
+    <h2>Found @Model.Stations.Length stations near coordinates @Model.Latitude,@Model.Longitude</h2>
     <ul>
         @foreach (var station in Model.Stations)
         {

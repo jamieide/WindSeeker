@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace WindSeeker.Web.NationalWeatherService
 {
+    /// <summary>
+    /// Primary class for displaying combined station and observations data.
+    /// </summary>
     public class StationObservations
     {
         public StationObservations(Station station, Observation[] observations)
@@ -10,28 +13,31 @@ namespace WindSeeker.Web.NationalWeatherService
             Station = station;
             Observations = observations;
 
-            ObservationCount = observations.Length;
-            StartDate = observations.Min(x => x.Timestamp);
-            EndDate = observations.Max(x => x.Timestamp);
+            if (observations.Any())
+            {
+                ObservationCount = observations.Length;
+                StartDate = observations.Min(x => x.Timestamp);
+                EndDate = observations.Max(x => x.Timestamp);
 
-            // todo probably faster to just iterate once over observations
-            var hasTemperature = observations.Where(x => x.Temperature.HasValue).Select(x => x.Temperature).Cast<double>();
-            TemperatureObservationCount = hasTemperature.Count();
-            MinTemperature = hasTemperature.Min();
-            MaxTemperature = hasTemperature.Max();
-            AverageTemperature = hasTemperature.Average();
+                // todo probably faster to just iterate once over observations
+                var hasTemperature = observations.Where(x => x.Temperature.HasValue).Select(x => x.Temperature).Cast<double>();
+                TemperatureObservationCount = hasTemperature.Count();
+                MinTemperature = hasTemperature.Min();
+                MaxTemperature = hasTemperature.Max();
+                AverageTemperature = hasTemperature.Average();
 
-            var hasWindSpeed = observations.Where(x => x.WindSpeed.HasValue).Select(x => x.WindSpeed).Cast<double>();
-            WindSpeedObservationCount = hasWindSpeed.Count();
-            MinWindSpeed = hasWindSpeed.Min();
-            MaxWindSpeed = hasWindSpeed.Max();
-            AverageWindSpeed = hasWindSpeed.Average();
+                var hasWindSpeed = observations.Where(x => x.WindSpeed.HasValue).Select(x => x.WindSpeed).Cast<double>();
+                WindSpeedObservationCount = hasWindSpeed.Count();
+                MinWindSpeed = hasWindSpeed.Min();
+                MaxWindSpeed = hasWindSpeed.Max();
+                AverageWindSpeed = hasWindSpeed.Average();
 
-            var hasWindGust = observations.Where(x => x.WindGust.HasValue).Select(x => x.WindGust).Cast<double>();
-            WindGustObservationCount = hasWindGust.Count();
-            MinWindGust = hasWindGust.Min();
-            MaxWindGust = hasWindGust.Max();
-            AverageWindGust = hasWindGust.Average();
+                var hasWindGust = observations.Where(x => x.WindGust.HasValue).Select(x => x.WindGust).Cast<double>();
+                WindGustObservationCount = hasWindGust.Count();
+                MinWindGust = hasWindGust.Min();
+                MaxWindGust = hasWindGust.Max();
+                AverageWindGust = hasWindGust.Average();
+            }
         }
 
         public Station Station { get; }

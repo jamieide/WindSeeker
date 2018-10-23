@@ -1,5 +1,8 @@
 ﻿namespace WindSeeker.Web.NationalWeatherService
 {
+    /// <summary>
+    /// A NWS weather station.
+    /// </summary>
     public class Station
     {
         public string Identifier { get; set; }

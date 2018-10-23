@@ -9,6 +9,9 @@ using Newtonsoft.Json;
 
 namespace WindSeeker.Web.NationalWeatherService
 {
+    /// <summary>
+    /// NWS API client implementation.
+    /// </summary>
     public class NationalWeatherServiceClient : INationalWeatherServiceClient
     {
         private readonly ILogger<NationalWeatherServiceClient> _logger;
@@ -27,6 +30,11 @@ namespace WindSeeker.Web.NationalWeatherService
             try
             {
                 var response = await _httpClient.GetAsync(uri);
+                if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return new Station[0];
+                }
+
                 response.EnsureSuccessStatusCode();
                 dynamic data = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
                 var stations = new List<Station>();
@@ -120,6 +128,11 @@ namespace WindSeeker.Web.NationalWeatherService
             try
             {
                 var response = await _httpClient.GetAsync(uri);
+                if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return new Observation[0];
+                }
+
                 response.EnsureSuccessStatusCode();
                 dynamic data = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
                 var observations = new List<Observation>();

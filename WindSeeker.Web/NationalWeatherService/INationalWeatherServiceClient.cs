@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace WindSeeker.Web.NationalWeatherService
 {
+    /// <summary>
+    /// Interface for NWS API client.
+    /// </summary>
     public interface INationalWeatherServiceClient
     {
         Task<Station[]> GetStations(double latitude, double longitude);
