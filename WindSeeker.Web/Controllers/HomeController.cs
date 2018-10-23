@@ -24,37 +24,39 @@ namespace WindSeeker.Web.Controllers
             return await Task.FromResult(View());
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Index(FindStationsViewModel vm)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return View();
-                }
-                return RedirectToAction(nameof(List), vm);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                throw;
-            }
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> Index(FindStationsViewModel vm)
+        //{
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return await Task.FromResult(View());
+        //        }
+
+        //        return RedirectToAction(nameof(List), new {vm.Latitude, vm.Longitude});
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, ex.Message);
+        //        throw;
+        //    }
+        //}
 
         [HttpGet]
-        public async Task<IActionResult> List(FindStationsViewModel findStationsViewModel)
+        public async Task<IActionResult> List(double latitude, double longitude)
         {
             try
             {
-                var stations = await _nwsClient.GetStations(findStationsViewModel.Latitude, findStationsViewModel.Longitude);
+                // todo prevent this endpoint from being called directly and skipping lat/lon validation
+                var stations = await _nwsClient.GetStations(latitude, longitude);
                 var vm = new ListViewModel()
                 {
-                    Latitude = findStationsViewModel.Latitude,
-                    Longitude = findStationsViewModel.Longitude,
+                    Latitude = latitude,
+                    Longitude = longitude,
                     Stations = stations
                 };
-                return await Task.FromResult(View(vm));
+                return View("List", vm);
             }
             catch (Exception ex)
             {
@@ -64,7 +66,7 @@ namespace WindSeeker.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(string stationIdentifier)
+        public async Task<IActionResult> Details(string id)
         {
             // return observations for last 30 days
             var end = DateTime.Now.Date;
@@ -72,12 +74,8 @@ namespace WindSeeker.Web.Controllers
 
             try
             {
-                var stationObservations = await _nwsClient.GetStationObservations(stationIdentifier, start, end);
-                var vm = new DetailsViewModel()
-                {
-                    StationObservations = stationObservations
-                };
-                return View(vm);
+                var stationObservations = await _nwsClient.GetStationObservations(id, start, end);
+                return View(stationObservations);
             }
             catch (Exception ex)
             {

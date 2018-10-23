@@ -1,9 +1,71 @@
-﻿@model WindSeeker.Web.Models.DetailsViewModel
+﻿@model WindSeeker.Web.NationalWeatherService.StationObservations
 
 @{
-    ViewData["Title"] = $"{@Model.StationObservations.Station.Identifier} Details";
+    ViewData["Title"] = $"{@Model.Station.Identifier} Observations";
 }
 
-<h1>Details</h1>
+<h1>@Model.Station.Identifier Observations</h1>
 
-<h2>@Model.StationObservations.ObservationCount</h2>
+<partial name="_Station" for="Station" />
+
+<h3>Summary</h3>
+<p>Observations from <strong>@Model.StartDate</strong> to <strong>@Model.EndDate</strong></p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th class="text-right">Observations</th>
+            <th class="text-right">Min</th>
+            <th class="text-right">Max</th>
+            <th class="text-right">Average</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Temperature (&deg;C)</th>
+            <td class="text-right">@Model.TemperatureObservationCount</td>
+            <td class="text-right">@Model.MinTemperature.ToString("F2")</td>
+            <td class="text-right">@Model.MaxTemperature.ToString("F2")</td>
+            <td class="text-right">@Model.AverageTemperature.ToString("F2")</td>
+        </tr>
+        <tr>
+            <th>Wind Speed (m/s)</th>
+            <td class="text-right">@Model.WindSpeedObservationCount</td>
+            <td class="text-right">@Model.MinWindSpeed.ToString("F2")</td>
+            <td class="text-right">@Model.MaxWindSpeed.ToString("F2")</td>
+            <td class="text-right">@Model.AverageWindSpeed.ToString("F2")</td>
+        </tr>
+        <tr>
+            <th>Wind Gust (m/s)</th>
+            <td class="text-right">@Model.WindGustObservationCount</td>
+            <td class="text-right">@Model.MinWindGust.ToString("F2")</td>
+            <td class="text-right">@Model.MaxWindGust.ToString("F2")</td>
+            <td class="text-right">@Model.AverageWindGust.ToString("F2")</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Details</h3>
+<table class="table table-sm table-striped">
+    <thead>
+        <tr>
+            <th>Date/Time</th>
+            <th class="text-right">Temperature (&deg;C)</th>
+            <th class="text-right">Wind Speed (m/s)</th>
+            <th class="text-right">Wind Direction (&deg;)</th>
+            <th class="text-right">Wind Gust (m/s)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var obs in Model.Observations)
+        {
+            <tr>
+                <td>@obs.Timestamp</td>
+                <td class="text-right">@obs.Temperature?.ToString("F2")</td>
+                <td class="text-right">@obs.WindSpeed?.ToString("F2")</td>
+                <td class="text-right">@obs.WindDirection</td>
+                <td class="text-right">@obs.WindGust?.ToString("F2")</td>
+            </tr>
+        }
+    </tbody>
+</table>

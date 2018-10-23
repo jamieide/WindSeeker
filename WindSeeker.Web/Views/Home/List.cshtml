@@ -11,10 +11,11 @@
 }
 else
 {
+    <h2>Stations near @Model.Latitude, @Model.Longitude</h2>
     <ul>
         @foreach (var station in Model.Stations)
         {
-            <li><a asp-controller="Home" asp-action="Details" asp-route-stationIdentifier="@station.Identifier">@station.ToString()</a></li>
+            <li><a asp-controller="Home" asp-action="Details" asp-route-id="@station.Identifier">@station.ToString()</a></li>
         }
     </ul>
 }

@@ -7,17 +7,47 @@
 <h1>Find National Weather Service Stations</h1>
 <div asp-validation-summary="All"></div>
 
-<form method="post">
+<form method="get" asp-controller="Home" asp-action="List">
     <div class="form-group">
         <label asp-for="Latitude"></label>
-        <input type="text" asp-for="Latitude" class="form-control"/>
+        <input type="text" asp-for="Latitude" class="form-control" />
         <span asp-validation-for="Latitude"></span>
     </div>
     <div class="form-group">
         <label asp-for="Longitude"></label>
-        <input type="text" asp-for="Longitude" class="form-control"/>
+        <input type="text" asp-for="Longitude" class="form-control" />
         <span asp-validation-for="Longitude"></span>
     </div>
-    <input type="submit" value="Submit"/>   
+    <input type="submit" class="btn btn-primary" value="Submit"/>
 </form>
 
+<h2 class="mt-5">Common Locations</h2>
+<div class="row">
+    <div class="col">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-primary">Vermont</li>
+            <li class="list-group-item">
+                <a asp-controller="Home" asp-action="List" asp-route-latitude="44.475833" asp-route-longitude="-73.211944">Burlington</a>
+
+            </li>
+            <li class="list-group-item">
+                <a asp-controller="Home" asp-action="List" asp-route-latitude="43.608889" asp-route-longitude="-72.979722">Rutland</a>
+            </li>
+            <li class="list-group-item">
+                <a asp-controller="Home" asp-action="List" asp-route-latitude="42.85" asp-route-longitude="-72.582222">Brattelboro</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-primary">New Hampshire</li>
+            <li class="list-group-item">
+                <a asp-controller="Home" asp-action="List" asp-route-latitude="42.7575" asp-route-longitude="-71.464444">Nashua</a>
+
+            </li>
+            <li class="list-group-item">
+                <a asp-controller="Home" asp-action="List" asp-route-latitude="44.306111" asp-route-longitude="-71.77">Littleton</a>
+            </li>
+        </ul>
+    </div>
+</div>
